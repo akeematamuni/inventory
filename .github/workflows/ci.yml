@@ -3,8 +3,10 @@ name: CI
 on:
   push:
     branches:
-      - main
+      - monkey-branch
   pull_request:
+    branches:
+      - monkey-branch
 
 permissions:
   actions: read

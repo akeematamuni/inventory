@@ -1,1 +1,11 @@
 autoInstallPeers: true
+
+onlyBuiltDependencies:
+  - '@nestjs/core'
+  - '@parcel/watcher'
+  - '@swc/core'
+  - bcrypt
+  - esbuild
+  - less
+  - nx
+  - unrs-resolver

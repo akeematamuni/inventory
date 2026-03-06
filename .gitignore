@@ -7,6 +7,9 @@ out-tsc
 
 # dependencies
 node_modules
+logs
+.env
+pnpm-lock.yaml
 
 # IDEs and editors
 /.idea
