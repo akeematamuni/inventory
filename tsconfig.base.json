@@ -16,16 +16,16 @@
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
         "paths": {
-            "@cloud-native-erp/core/decorators": [
+            "@inventory/core/decorators": [
                 "libs/core/src/lib/decorators/index.ts"
             ],
-            "@cloud-native-erp/core/domain": ["libs/core/src/lib/domain/index.ts"],
-            "@cloud-native-erp/core/errors": ["libs/core/src/lib/errors/index.ts"],
-            "@cloud-native-erp/core/guards": ["libs/core/src/lib/guards/index.ts"],
-            "@cloud-native-erp/core/interceptors": ["libs/core/src/lib/interceptors/index.ts"],
-            "@cloud-native-erp/core/logging": ["libs/core/src/lib/logging/index.ts"],
-            "@cloud-native-erp/core/validation": ["libs/core/src/lib/validation/index.ts"],
-            "@cloud-native-erp/core": ["libs/core/src/index.ts"],
+            "@inventory/core/domain": ["libs/core/src/lib/domain/index.ts"],
+            "@inventory/core/errors": ["libs/core/src/lib/errors/index.ts"],
+            "@inventory/core/guards": ["libs/core/src/lib/guards/index.ts"],
+            "@inventory/core/interceptors": ["libs/core/src/lib/interceptors/index.ts"],
+            "@inventory/core/logging": ["libs/core/src/lib/logging/index.ts"],
+            "@inventory/core/validation": ["libs/core/src/lib/validation/index.ts"],
+            "@inventory/core": ["libs/core/src/index.ts"],
         }
     },
     "exclude": ["node_modules", "tmp"]
