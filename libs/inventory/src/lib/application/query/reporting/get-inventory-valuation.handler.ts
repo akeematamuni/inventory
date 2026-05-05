@@ -2,9 +2,12 @@ import { QueryHandler, IQueryHandler } from "@nestjs/cqrs";
 import { Inject } from "@nestjs/common";
 
 import {
-    IStockBalanceRepository, STOCK_BALANCE_REPOSITORY,
-    IStockLedgerEntryRepository, STOCK_LEDGER_ENTRY_REPOSITORY,
-    StockLedgerEntryEntity, MovementType
+    IStockBalanceRepository, 
+    STOCK_BALANCE_REPOSITORY,
+    IStockLedgerEntryRepository, 
+    STOCK_LEDGER_ENTRY_REPOSITORY,
+    StockLedgerEntryEntity, 
+    MovementType
 } from "../../../domain";
 
 import { GetInventoryValuationQuery } from "./get-inventory-valuation.query";
@@ -62,7 +65,7 @@ export class GetInventoryValuationHandler implements IQueryHandler<GetInventoryV
         // if (totalReceptUnit === 0) return 0;
 
         const avg = totalReceiptCost / totalReceptUnit;
-        return Math.round(avg * currentBalance * 100) / 100;
+        return Math.round((avg * currentBalance) * 100) / 100;
     }
 
     /** Calculate the value of stock based on FIRST-IN FIRST-OUT. */
