@@ -3,6 +3,8 @@
  * Every unit of stock movement maps to exactly one MovementType.
 */
 export enum MovementType {
+    // Initial balance on CSV import
+    OPENING_STOCK = 'OPENING_STOCK',
     // Stock in from procurement
     RECEIPT = 'RECEIPT',
     // Stock leaving a warehouse  
@@ -15,6 +17,5 @@ export enum MovementType {
     ADJUSTMENT_DOWN = 'ADJUSTMENT_DOWN',
     // Variance adjustment from cycle count
     CYCLE_COUNT_ADJ = 'CYCLE_COUNT_ADJ',
-    // Initial balance on CSV import
-    OPENING_STOCK = 'OPENING_STOCK',
+    CYCLE_COUNT_ADJ_DOWN = 'CYCLE_COUNT_ADJ_DOWN'
 }
