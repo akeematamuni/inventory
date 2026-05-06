@@ -11,6 +11,11 @@ export enum ValuationMethod {
     AVCO = 'AVCO',
 }
 
+export enum ValuationScope {
+    ALL_MOVEMENTS = 'ALL_MOVEMENTS',
+    PURCHASES_ONLY = 'PURCHASES_ONLY'
+}
+
 // Deals with balance
 export class StockLevelResponseDto {
     @ApiProperty({ type: String }) productId!: string;
@@ -90,19 +95,25 @@ export class InventoryValuationResponseDto {
     @ApiProperty({ type: String }) warehouseId: string;
     @ApiProperty({ type: Number }) currentBalance: number;
     @ApiProperty({ type: Number }) totalValue: number;
+    @ApiProperty({ type: Number }) averageUnitCost: number;
     @ApiProperty({ enum: ValuationMethod }) valuationMethod: ValuationMethod;
+    @ApiProperty({ enum: ValuationScope }) valuationScope: ValuationScope;
 
     constructor(
         productId: string,
         warehouseId: string,
         currentBalance: number,
         totalValue: number,
+        averageUnitCost: number,
         valuationMethod: ValuationMethod,
+        valuationScope: ValuationScope
     ) {
         this.productId = productId;
         this.warehouseId = warehouseId;
         this.currentBalance = currentBalance;
         this.totalValue = totalValue;
+        this.averageUnitCost = averageUnitCost;
         this.valuationMethod = valuationMethod;
+        this.valuationScope = valuationScope
     }
 }
