@@ -24,6 +24,7 @@ export class StockTransferMapper {
             {
                 productId: raw.productId,
                 stockTransferId: raw.stockTransferId,
+                unitCost: raw.unitCost,
                 quantityRequested: raw.quantityRequested,
                 quantityDispatched: raw.quantityDispatched,
                 quantityReceived: raw.quantityReceived
@@ -50,6 +51,7 @@ export class StockTransferMapper {
         const entity = new StockTransferLineEntityTypeOrm();
         entity.id = domain.id;
         entity.productId = domain.productId;
+        entity.unitCost = domain.unitCost;
         entity.stockTransferId = domain.stockTransferId;
         entity.quantityRequested = domain.quantityRequested;
         entity.quantityDispatched = domain.quantityDispatched;

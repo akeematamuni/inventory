@@ -18,6 +18,9 @@ export class StockTransferLineEntityTypeOrm {
     @Column({ name: 'quantity_recieved', type: 'int', default: 0 })
     quantityReceived!: number;
 
+    @Column({ name: 'unit_cost', type: 'int', default: 0 })
+    unitCost!: number;
+
     @Column({ name: 'stock_transfer_id', type: 'uuid' })
     stockTransferId!: string;
 

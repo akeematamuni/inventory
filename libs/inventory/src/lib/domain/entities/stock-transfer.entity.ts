@@ -52,7 +52,8 @@ export class StockTransferEntity extends Entity<StockTransferProps> {
         const lines = props.lines.map(line => StockTransferLineEntity.create({ 
             stockTransferId: id,
             productId: line.productId,
-            quantityRequested: line.quantityRequested
+            quantityRequested: line.quantityRequested,
+            unitCost: line.unitCost
         }));
 
         return new StockTransferEntity(

@@ -6,12 +6,14 @@ export interface StockTransferLineProps {
     quantityRequested: number;
     quantityDispatched: number;
     quantityReceived: number;
+    unitCost: number;
 }
 
 export interface CreateStockTransferLineProps {
     productId: string;
     stockTransferId: string;
     quantityRequested: number;
+    unitCost: number;
 }
 
 /**
@@ -60,4 +62,5 @@ export class StockTransferLineEntity extends Entity<StockTransferLineProps> {
     get quantityRequested(): number { return this.props.quantityRequested; }
     get quantityDispatched(): number { return this.props.quantityDispatched; }
     get quantityReceived(): number { return this.props.quantityReceived; }
+    get unitCost(): number { return this.props.unitCost; }
 }
