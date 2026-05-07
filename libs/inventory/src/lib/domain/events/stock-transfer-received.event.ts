@@ -7,6 +7,7 @@ export class StockTransferReceivedEvent {
         public readonly occurredAt: Date,
         public readonly lines: {
             productId: string;
+            unitCost: number;
             quantityReceived: number;
             variance: number;
         }[],

@@ -8,6 +8,7 @@ export class StockTransferDispatchedEvent {
         public readonly lines: {
             productId: string;
             quantityDispatched: number;
+            unitCost: number;
         }[],
         public readonly notes?: string | null
     ) {}
