@@ -74,57 +74,69 @@ export class GetInventoryValuationHandler implements IQueryHandler<GetInventoryV
 
     /** Calculate the value of remaining stock based on the aveage cost of all stock received. */
     private calculateAVCO(
-        upward: StockLedgerEntryEntity[], downward: StockLedgerEntryEntity[], currentBalance: number
+        upward: StockLedgerEntryEntity[], downward: StockLedgerEntryEntity[]
     ): number {
         const allMovements = [...upward, ...downward].sort(
             (a, b) => a.occurredAt.getTime() - b.occurredAt.getTime()
         );
 
+        // Two accumulators that would update looping through each entry
+        // How many units are in the pool right now (runningUnits)
+        // The total monetary value of those units right now (runningUnitsTotalCost)
+        // At any point, runningUnitsTotalCost / runningUnits gives the current average cost per unit
         let runningUnits = 0;
-        let runningCostPool = 0;
+        let runningUnitsTotalCost = 0;
 
         for (const entry of allMovements) {
             const quantity = Math.abs(entry.quantityChange);
             const isDownward = downward.some(down => down.id === entry.id);
 
             if (isDownward) {
-                // Deplete pool at the average cost
-                const averageCost = runningUnits > 0 ? runningCostPool / runningUnits : 0;
-                runningCostPool = Math.max(0, runningCostPool - (averageCost * quantity));
+                // Deplete runningUnitsTotalCost at the average cost
+                const averageCost = runningUnits > 0 ? runningUnitsTotalCost / runningUnits : 0;
+                runningUnitsTotalCost = Math.max(0, runningUnitsTotalCost - (averageCost * quantity));
                 runningUnits = Math.max(0, runningUnits - quantity);
 
             } else {
-                const unitCost = entry.unitCost ?? (runningUnits > 0 ? runningCostPool / runningUnits : 0);
-                runningCostPool += unitCost * quantity;
+                // Entry is upward so value increases
+                // Actual unitCost can be used or default to average
+                // Approach can be adapted to suit business purposes
+                const unitCost = entry.unitCost 
+                    ?? (runningUnits > 0 ? runningUnitsTotalCost / runningUnits : 0);
+                
+                runningUnitsTotalCost += unitCost * quantity;
                 runningUnits += quantity;
             }
         }
 
-        return Math.max(0, runningCostPool);
+        return Math.max(0, runningUnitsTotalCost);
     }
 
     /** Calculate the value of stock based on FIRST-IN FIRST-OUT. */
     private calculateFIFO(
-        upward: StockLedgerEntryEntity[], downward: StockLedgerEntryEntity[], currentBalance: number
+        upward: StockLedgerEntryEntity[], downward: StockLedgerEntryEntity[]
     ): number {
-        let totalUnits = 0;
+        // Accumulators to hold the data and state through iterations
         let runningAverage = 0;
+        let runningTotalUnits = 0;
         const layers: { quantity: number; unitCost: number }[] = [];
 
         for (const entry of upward) {
+            // Extract or derive layers data
             const quantity = Math.abs(entry.quantityChange);
-            const unitCost = entry.unitCost ?? (totalUnits > 0 ? runningAverage : 0);
+            const unitCost = entry.unitCost ?? (runningTotalUnits > 0 ? runningAverage : 0);
 
             layers.push({ quantity, unitCost });
 
-            const totalCost = layers.reduce((sum, l) => sum + l.quantity * l.unitCost, 0);
-            totalUnits = layers.reduce((sum, l) => sum + l.quantity, 0);
-            runningAverage = totalUnits > 0 ? totalCost / totalUnits : 0;
+            const totalCost = layers.reduce((sum, layer) => sum + (layer.quantity * layer.unitCost), 0);
+            runningTotalUnits = layers.reduce((sum, layer) => sum + layer.quantity, 0);
+            runningAverage = runningTotalUnits > 0 ? totalCost / runningTotalUnits : 0;
         }
 
         const downwardSorted = downward.sort((a, b) => a.occurredAt.getTime() - b.occurredAt.getTime());
 
         for (const entry of downwardSorted) {
+            // Tracks how many down movement units to consume from the layers
             let remaining = Math.abs(entry.quantityChange);
 
             for (const layer of layers) {
@@ -137,35 +149,23 @@ export class GetInventoryValuationHandler implements IQueryHandler<GetInventoryV
             }
         }
 
-        const totalValue = layers.reduce(
-            (sum, layer) => sum + layer.quantity * layer.unitCost, 0
-        );
+        // const totalValue = layers.reduce(
+        //     (sum, layer) => sum + (layer.quantity * layer.unitCost), 0
+        // );
+
+        // Alternative to using reduce
+        let totalValue = 0;
+        for (const layer of layers) {
+            totalValue += layer.quantity * layer.unitCost;
+        }
 
         return Math.max(0, totalValue);
-
-        // Sort the ledger entries into layers based on time stock came in
-        // const layers = [...upward].sort((a, b) => a.occurredAt.getTime() - b.occurredAt.getTime());
-
-        // let remainingUnits = currentBalance;
-        // let totalValue = 0;
-
-        // // Calculate value from the newest to oldest
-        // for (const layer of layers.reverse()) {
-        //     if (remainingUnits <= 0) break;
-
-        //     const layerQty = Math.min(layer.quantityChange, remainingUnits);
-        //     totalValue += layerQty * (layer.unitCost ?? 0);
-
-        //     remainingUnits -= layerQty;
-        // }
-
-        // return Math.round(totalValue * 100) / 100;
     }
 
     async execute(query: GetInventoryValuationQuery): Promise<InventoryValuationResponseDto[]> {
         const { productId:_productId, warehouseId:_warehouseId, method, scope } = query;
 
-        // Fetch all entries in ledger with movetype of receipt
+        // Fetch all entries in ledger for a specific product in a specific warehouse
         const receipts = await this.ledgerRepo.findAll({
             warehouseId: _warehouseId,
             productId: _productId
@@ -192,8 +192,8 @@ export class GetInventoryValuationHandler implements IQueryHandler<GetInventoryV
 
                 // Get valuation for OPENING_STOCK and RECEIPT
                 totalValue = method === ValuationMethod.AVCO
-                    ? this.calculateAVCO(purchaseEntries, [], balance.quantity)
-                    : this.calculateFIFO(purchaseEntries, [], balance.quantity);
+                    ? this.calculateAVCO(purchaseEntries, [])
+                    : this.calculateFIFO(purchaseEntries, []);
 
             } else {
                 const upwardEntries = chronological.filter(e => 
@@ -205,17 +205,17 @@ export class GetInventoryValuationHandler implements IQueryHandler<GetInventoryV
                 );
 
                 totalValue = method === ValuationMethod.AVCO
-                    ? this.calculateAVCO(upwardEntries, downwardEntries, balance.quantity)
-                    : this.calculateFIFO(upwardEntries, downwardEntries, balance.quantity);
+                    ? this.calculateAVCO(upwardEntries, downwardEntries)
+                    : this.calculateFIFO(upwardEntries, downwardEntries);
             }
 
-            const averageUnitCost = Math.round((totalValue / balance.quantity) * 10000) / 10000 || 0;
+            const averageUnitCost = Math.round((totalValue / balance.quantity) * 100) / 100 || 0;
             
             results.push(new InventoryValuationResponseDto(
                 productId, 
                 warehouseId, 
                 balance.quantity,
-                totalValue,
+                Math.round(totalValue * 100) / 100,
                 averageUnitCost,
                 method,
                 scope
