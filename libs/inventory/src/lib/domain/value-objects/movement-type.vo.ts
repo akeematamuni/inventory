@@ -16,6 +16,5 @@ export enum MovementType {
     // Manual negative correction    
     ADJUSTMENT_DOWN = 'ADJUSTMENT_DOWN',
     // Variance adjustment from cycle count
-    CYCLE_COUNT_ADJ = 'CYCLE_COUNT_ADJ',
-    CYCLE_COUNT_ADJ_DOWN = 'CYCLE_COUNT_ADJ_DOWN'
+    CYCLE_COUNT_ADJ = 'CYCLE_COUNT_ADJ'
 }
