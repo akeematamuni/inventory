@@ -5,11 +5,17 @@ import { QueryBus } from "@nestjs/cqrs";
 import { MovementType, StockAlertStatus } from '../../domain';
 
 import {
-    StockLevelResponseDto, MovementHistoryResponseDto, StockAlertResponseDto, InventoryValuationResponseDto,
-    GetStockLevelsQuery, GetMovementHistoryQuery, GetStockAlertsQuery, GetInventoryValuationQuery,
-    ValuationMethod
+    StockLevelResponseDto,
+    MovementHistoryResponseDto, 
+    StockAlertResponseDto, 
+    InventoryValuationResponseDto,
+    GetStockLevelsQuery, 
+    GetMovementHistoryQuery, 
+    GetStockAlertsQuery, 
+    GetInventoryValuationQuery,
+    ValuationMethod,
+    ValuationScope
 } from '../../application';
-
 
 @ApiTags('Reporting')
 @ApiBearerAuth()
@@ -70,14 +76,16 @@ export class ReportingController {
     @Get('valuation')
     @ApiOperation({ summary: 'Get inventory valuation using FIFO or AVCO' })
     @ApiQuery({ name: 'method', required: true, enum: ValuationMethod })
-    @ApiQuery({ name: 'warehouseId', required: false, type: String })
+    @ApiQuery({ name: 'scope', required: true, enum: ValuationScope })
+    @ApiQuery({ name: 'warehouseId', required: true, type: String })
     @ApiQuery({ name: 'productId', required: false, type: String })
     @ApiResponse({ status: 200, type: () => [InventoryValuationResponseDto] })
     getValuation(
         @Query('method') method: ValuationMethod,
-        @Query('warehouseId') warehouseId?: string,
+        @Query('scope') scope: ValuationScope,
+        @Query('warehouseId') warehouseId: string,
         @Query('productId') productId?: string,
     ): Promise<InventoryValuationResponseDto[]> {
-        return this.queryBus.execute(new GetInventoryValuationQuery(method, warehouseId, productId));
+        return this.queryBus.execute(new GetInventoryValuationQuery(method, scope, warehouseId, productId));
     }
 }
