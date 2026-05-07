@@ -17,11 +17,11 @@ export class SetOpeningStockDto {
     @Min(1)
     quantity!: number;
 
-    @ApiPropertyOptional({ type: Number, example: 85.50, description: 'Unit cost for valuation purposes' })
+    @ApiProperty({ type: Number, example: 85.50, description: 'Unit cost for valuation purposes' })
     @IsOptional()
     @IsNumber()
     @Min(0)
-    unitCost?: number;
+    unitCost!: number;
 
     @ApiPropertyOptional({ type: String, example: 'USD', default: 'USD' })
     @IsOptional()
