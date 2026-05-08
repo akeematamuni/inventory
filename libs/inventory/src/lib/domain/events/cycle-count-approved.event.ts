@@ -6,6 +6,7 @@ export class CycleCountApprovedEvent {
         public readonly occurredAt: Date,
         public readonly lines: {
             productId: string;
+            unitCost: number;
             variance: number | null;
         }[],
     ) {}

@@ -3,6 +3,7 @@ import { Entity, BaseId } from "@inventory/core/domain";
 export interface CycleCountLineProps {
     productId: string;
     cycleCountId: string;
+    unitCost: number;
     systemQuantity: number;
     countedQuantity: number | null;
 }
@@ -10,6 +11,7 @@ export interface CycleCountLineProps {
 export interface CreateCycleCountLineProps {
     productId: string;
     cycleCountId: string;
+    unitCost: number;
     systemQuantity: number;
 }
 
@@ -57,6 +59,7 @@ export class CycleCountLineEntity extends Entity<CycleCountLineProps> {
 
     get productId(): string { return this.props.productId; }
     get cycleCountId(): string { return this.props.cycleCountId; }
+    get unitCost(): number { return this.props.unitCost; }
     get systemQuantity(): number { return this.props.systemQuantity; }
     get countedQuantity(): number | null { return this.props.countedQuantity; }
 }
