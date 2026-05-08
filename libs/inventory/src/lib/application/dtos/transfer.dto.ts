@@ -68,6 +68,7 @@ export class ReceiveTransferDto {
 export class StockTransferLineResponseDto {
     @ApiProperty({ type: String }) id!: string;
     @ApiProperty({ type: String }) productId!: string;
+    @ApiProperty({ type: Number }) unitCost!: number;
     @ApiProperty({ type: Number }) quantityRequested!: number;
     @ApiProperty({ type: Number }) quantityDispatched!: number;
     @ApiProperty({ type: Number }) quantityReceived!: number;
@@ -97,6 +98,7 @@ export class StockTransferResponseDto {
             const lineDto = new StockTransferLineResponseDto();
             lineDto.id = line.id;
             lineDto.productId = line.productId;
+            lineDto.unitCost = line.unitCost;
             lineDto.quantityRequested = line.quantityRequested;
             lineDto.quantityDispatched = line.quantityDispatched;
             lineDto.quantityReceived = line.quantityReceived;
