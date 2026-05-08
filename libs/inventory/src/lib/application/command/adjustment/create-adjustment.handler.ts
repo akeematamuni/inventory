@@ -2,15 +2,25 @@ import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { Inject, Logger } from "@nestjs/common";
 
 import {
-    IAdjustmentRepository, ADJUSTMENT_REPOSITORY,
-    AdjustmentEntity, AdjustmentCreatedEvent,
-    IWarehouseRepository, WAREHOUSE_REPOSITORY,
-    IProductSettingsRepository, PRODUCT_SETTINGS_REPOSITORY,
-    WarehouseNotFoundException, WarehouseInactiveException,
-    ProductNotFoundException, ProductInactiveException,
-    IStockBalanceRepository, STOCK_BALANCE_REPOSITORY,
-    MovementType, AdjustmentReason, InsufficientStockException,
-    IInventoryEventPublisher, INVENTORY_EVENT_PUBLISHER
+    IAdjustmentRepository, 
+    ADJUSTMENT_REPOSITORY,
+    AdjustmentEntity, 
+    AdjustmentCreatedEvent,
+    IWarehouseRepository, 
+    WAREHOUSE_REPOSITORY,
+    IProductSettingsRepository, 
+    PRODUCT_SETTINGS_REPOSITORY,
+    WarehouseNotFoundException, 
+    WarehouseInactiveException,
+    ProductNotFoundException, 
+    ProductInactiveException,
+    IStockBalanceRepository, 
+    STOCK_BALANCE_REPOSITORY,
+    MovementType, 
+    AdjustmentReason, 
+    InsufficientStockException,
+    IInventoryEventPublisher, 
+    INVENTORY_EVENT_PUBLISHER
 } from "../../../domain";
 
 import { CreateAdjustmentCommand } from "./create-adjustment.command";
@@ -38,6 +48,7 @@ export class CreateAdjustmentHandler implements ICommandHandler<CreateAdjustment
             warehouseId, 
             quantity, 
             movementType, 
+            unitCost,
             reasonCode, 
             performedBy,
             notes, 
@@ -48,6 +59,7 @@ export class CreateAdjustmentHandler implements ICommandHandler<CreateAdjustment
             productId,
             warehouseId,
             movementType,
+            unitCost,
             quantity,
             notes,
             createdBy: performedBy,
@@ -86,6 +98,7 @@ export class CreateAdjustmentHandler implements ICommandHandler<CreateAdjustment
             adjustment.warehouseId,
             adjustment.quantity,
             adjustment.movementType,
+            adjustment.unitCost,
             adjustment.reason.code,
             adjustment.createdBy,
             adjustment.createdAt,

@@ -5,6 +5,7 @@ export class AdjustmentCreatedEvent {
         public readonly warehouseId: string,
         public readonly quantity: number,
         public readonly movementType: string,
+        public readonly unitCost: number,
         public readonly reasonCode: string,
         public readonly createdBy: string,
         public readonly occurredAt: Date,

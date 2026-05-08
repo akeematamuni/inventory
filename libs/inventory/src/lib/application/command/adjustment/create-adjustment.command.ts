@@ -6,6 +6,7 @@ export class CreateAdjustmentCommand {
         public readonly warehouseId: string,
         public readonly quantity: number,
         public readonly movementType: MovementType,
+        public readonly unitCost: number,
         public readonly reasonCode: AdjustmentReasonCode,
         public readonly performedBy: string,
         public readonly notes?: string,

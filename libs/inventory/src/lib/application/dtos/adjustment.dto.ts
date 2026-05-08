@@ -25,6 +25,11 @@ export class CreateAdjustmentDto {
     @IsEnum(MovementType)
     movementType!: MovementType;
 
+    @ApiProperty({ type: Number, example: 13.45 })
+    @IsNumber()
+    @Min(0.01)
+    unitCost!: number;
+
     @ApiProperty({ enum: AdjustmentReasonCode, example: AdjustmentReasonCode.DAMAGE })
     @IsEnum(AdjustmentReasonCode)
     reasonCode!: AdjustmentReasonCode;
@@ -46,6 +51,7 @@ export class AdjustmentResponseDto {
     @ApiProperty({ type: String }) warehouseId!: string;
     @ApiProperty({ type: Number }) quantity!: number;
     @ApiProperty({ enum: MovementType }) movementType!: MovementType;
+    @ApiProperty({ type: Number }) unitCost!: number;
     @ApiProperty({ enum: AdjustmentReasonCode }) reasonCode!: AdjustmentReasonCode;
     @ApiPropertyOptional({ type: String }) reasonNotes?: string | null;
     @ApiProperty({ type: String }) performedBy!: string;
@@ -59,6 +65,7 @@ export class AdjustmentResponseDto {
         dto.warehouseId = adjustment.warehouseId;
         dto.quantity = adjustment.quantity;
         dto.movementType = adjustment.movementType;
+        dto.unitCost = adjustment.unitCost;
         dto.reasonCode = adjustment.reason.code;
         dto.reasonNotes = adjustment.reason.notes;
         dto.performedBy = adjustment.createdBy;

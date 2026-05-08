@@ -6,6 +6,7 @@ export interface AdjustmentProps {
     productId: string;
     warehouseId: string;
     movementType: MovementType;
+    unitCost: number;
     quantity: number;
     reason: AdjustmentReason;
     notes?: string | null;
@@ -17,6 +18,7 @@ export interface CreateAdjustmentProps {
     productId: string;
     warehouseId: string;
     movementType: MovementType;
+    unitCost: number;
     quantity: number;
     reason: AdjustmentReason;
     notes?: string;
@@ -59,6 +61,7 @@ export class AdjustmentEntity extends Entity<AdjustmentProps> {
     get productId(): string { return this.props.productId; }
     get warehouseId(): string { return this.props.warehouseId; }
     get movementType(): MovementType { return this.props.movementType; }
+    get unitCost(): number { return this.props.unitCost; }
     get quantity(): number { return this.props.quantity; }
     get reason(): AdjustmentReason { return this.props.reason; }
     get notes(): string | null | undefined { return this.props.notes; }

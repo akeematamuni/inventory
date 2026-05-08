@@ -18,6 +18,9 @@ export class AdjustmentEntityTypeOrm {
     @Column({ name: 'movement_type', type: 'enum', enum: MovementType })
     movementType!: MovementType;
 
+    @Column({ name: 'unit_cost', type: 'int', default: 0 })
+    unitCost!: number;
+
     @Column({ type: 'int' })
     quantity!: number;
 

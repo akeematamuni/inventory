@@ -8,6 +8,7 @@ export class AdjustmentMapper {
                 productId: raw.productId,
                 warehouseId: raw.warehouseId,
                 movementType: raw.movementType,
+                unitCost: raw.unitCost,
                 quantity: raw.quantity,
                 reason: AdjustmentReason.create({ code: raw.reasonCode, notes: raw.reasonNotes }),
                 notes: raw.notes,
@@ -24,6 +25,7 @@ export class AdjustmentMapper {
         entity.productId = domain.productId;
         entity.warehouseId = domain.warehouseId;
         entity.movementType = domain.movementType;
+        entity.unitCost = domain.unitCost;
         entity.quantity = domain.quantity;
         entity.reasonCode = domain.reason.code;
         entity.reasonNotes = domain.reason.notes;
