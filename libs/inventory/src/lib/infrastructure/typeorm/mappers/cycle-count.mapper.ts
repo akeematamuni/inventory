@@ -24,6 +24,7 @@ export class CycleCountMapper {
             {
                 productId: raw.productId,
                 cycleCountId: raw.cycleCountId,
+                unitCost: raw.unitCost,
                 systemQuantity: raw.systemQuantity,
                 countedQuantity: raw.countedQuantity
             },
@@ -49,6 +50,7 @@ export class CycleCountMapper {
         entity.id = domain.id;
         entity.productId = domain.productId;
         entity.cycleCountId = domain.cycleCountId;
+        entity.unitCost = domain.unitCost;
         entity.systemQuantity = domain.systemQuantity;
         entity.countedQuantity = domain.countedQuantity;
         return entity;

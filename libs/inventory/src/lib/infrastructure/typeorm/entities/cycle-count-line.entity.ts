@@ -12,6 +12,9 @@ export class CycleCountLineEntityTypeOrm {
     @Column({ name: 'cycle_count_id', type: 'uuid' })
     cycleCountId!: string;
 
+    @Column({ name: 'unit_cost', type: 'int', default: 0 })
+    unitCost!: number;
+
     @Column({ name: 'system_quantity', type: 'int' })
     systemQuantity!: number;
 

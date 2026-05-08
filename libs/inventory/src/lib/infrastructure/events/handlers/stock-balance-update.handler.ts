@@ -30,7 +30,7 @@ interface Params {
     warehouseId: string;
     quantityChange: number;
     movementType: MovementType;
-    unitCost?: number | null;
+    unitCost: number | null;
     currency?: string | null;
     referenceId: string;
     referenceType: string;
@@ -206,6 +206,7 @@ export class StockBalanceUpdateHandler {
                     warehouseId: event.sourceWarehouseId,
                     quantityChange: -e.quantityDispatched,
                     movementType: MovementType.TRANSFER_OUT,
+                    unitCost: e.unitCost,
                     referenceId: event.transferId,
                     referenceType: 'STOCK_TRANSFER',
                     notes: event.notes,
@@ -230,6 +231,7 @@ export class StockBalanceUpdateHandler {
                     warehouseId: event.destinationWarehouseId,
                     quantityChange: e.quantityReceived,
                     movementType: MovementType.TRANSFER_IN,
+                    unitCost: e.unitCost,
                     referenceId: event.transferId,
                     referenceType: 'STOCK_TRANSFER',
                     notes: event.notes,
@@ -249,6 +251,7 @@ export class StockBalanceUpdateHandler {
                         warehouseId: event.sourceWarehouseId,
                         quantityChange: -e.variance,
                         movementType: MovementType.ADJUSTMENT_DOWN,
+                        unitCost: e.unitCost,
                         referenceId: event.transferId,
                         referenceType: 'STOCK_TRANSFER_VARIANCE',
                         createdBy: event.createdBy,
@@ -275,6 +278,7 @@ export class StockBalanceUpdateHandler {
                 warehouseId: event.warehouseId,
                 quantityChange: change,
                 movementType: event.movementType as MovementType,
+                unitCost: event.unitCost,
                 referenceId: event.adjustmentId,
                 referenceType: 'ADJUSTMENT',
                 notes: event.notes,
@@ -304,6 +308,7 @@ export class StockBalanceUpdateHandler {
                     warehouseId: event.warehouseId,
                     quantityChange: e.variance,
                     movementType: MovementType.CYCLE_COUNT_ADJ,
+                    unitCost: e.unitCost,
                     referenceId: event.cycleCountId,
                     referenceType: 'CYCLE_COUNT',
                     createdBy: event.approvedBy,
