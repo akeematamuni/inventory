@@ -2,6 +2,7 @@ export class CreateStockTransferLine {
     constructor(
         public readonly productId: string,
         public readonly quantityRequested: number,
+        public readonly unitCost: number,
     ) {}
 }
 

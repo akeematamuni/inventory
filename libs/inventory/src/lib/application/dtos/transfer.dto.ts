@@ -15,6 +15,11 @@ export class CreateStockTransferLineDto {
     @IsNumber()
     @Min(1)
     quantityRequested!: number;
+
+    @ApiProperty({ type: Number, example: 130.25 })
+    @IsNumber()
+    @Min(1)
+    unitCost!: number;
 }
 
 export class CreateStockTransferDto {

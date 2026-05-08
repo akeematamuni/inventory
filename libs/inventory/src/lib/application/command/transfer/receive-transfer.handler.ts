@@ -40,7 +40,8 @@ export class ReceiveTransferHandler implements ICommandHandler<ReceiveTransferCo
             performedBy,
             new Date(),
             saved.lines.map(l => ({
-                productId: l.productId, 
+                productId: l.productId,
+                unitCost: l.unitCost,
                 quantityReceived: l.quantityReceived,
                 variance: l.variance
             }))
