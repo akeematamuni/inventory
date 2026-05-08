@@ -2,12 +2,18 @@ import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { Inject, Logger } from "@nestjs/common";
 
 import {
-    ICycleCountRepository, CYCLE_COUNT_REPOSITORY,
-    IWarehouseRepository, WAREHOUSE_REPOSITORY,
-    IProductSettingsRepository, PRODUCT_SETTINGS_REPOSITORY,
-    IStockBalanceRepository, STOCK_BALANCE_REPOSITORY,
-    WarehouseNotFoundException, WarehouseInactiveException,
-    ProductNotFoundException, ProductInactiveException,
+    ICycleCountRepository, 
+    CYCLE_COUNT_REPOSITORY,
+    IWarehouseRepository, 
+    WAREHOUSE_REPOSITORY,
+    IProductSettingsRepository, 
+    PRODUCT_SETTINGS_REPOSITORY,
+    IStockBalanceRepository, 
+    STOCK_BALANCE_REPOSITORY,
+    WarehouseNotFoundException, 
+    WarehouseInactiveException,
+    ProductNotFoundException, 
+    ProductInactiveException,
     CycleCountEntity
 } from "../../../domain";
 
@@ -58,6 +64,7 @@ export class CreateCycleCountHandler implements ICommandHandler<CreateCycleCount
             lines: lines.map(l => ({
                 productId: l.productId,
                 systemQuantity: l.systemQuantity,
+                unitCost: l.unitCost
             }))
         });
 

@@ -11,6 +11,11 @@ export class CreateCycleCountLineDto {
     @IsNotEmpty()
     productId!: string;
 
+    @ApiProperty({ type: Number, example: 12.34 })
+    @IsNumber()
+    @Min(0)
+    unitCost!: number;
+
     @ApiProperty({ type: Number, example: 300, description: 'Current system balance at time of count creation' })
     @IsNumber()
     @Min(0)
@@ -70,6 +75,7 @@ export class ApproveOrRejectCycleCountDto {
 export class CycleCountLineResponseDto {
     @ApiProperty({ type: String }) id!: string;
     @ApiProperty({ type: String }) productId!: string;
+    @ApiProperty({ type: Number }) unitCost!: number;
     @ApiProperty({ type: Number }) systemQuantity!: number;
     @ApiPropertyOptional({ type: Number }) countedQuantity?: number | null;
     @ApiPropertyOptional({ type: Number }) variance?: number | null;
@@ -97,6 +103,7 @@ export class CycleCountResponseDto {
             const lineDto = new CycleCountLineResponseDto();
             lineDto.id = line.id;
             lineDto.productId = line.productId;
+            lineDto.unitCost = line.unitCost;
             lineDto.systemQuantity = line.systemQuantity;
             lineDto.countedQuantity = line.countedQuantity;
             lineDto.variance = line.variance();

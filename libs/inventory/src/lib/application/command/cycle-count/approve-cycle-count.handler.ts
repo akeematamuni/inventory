@@ -2,9 +2,12 @@ import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { Inject, Logger } from "@nestjs/common";
 
 import { 
-    ICycleCountRepository, CYCLE_COUNT_REPOSITORY,
-    CycleCountNotFoundException, IInventoryEventPublisher,
-    INVENTORY_EVENT_PUBLISHER, CycleCountApprovedEvent
+    ICycleCountRepository, 
+    CYCLE_COUNT_REPOSITORY,
+    CycleCountNotFoundException, 
+    IInventoryEventPublisher,
+    INVENTORY_EVENT_PUBLISHER, 
+    CycleCountApprovedEvent
 } from "../../../domain";
 
 import { ApproveCycleCountCommand } from "./approve-cycle-count.command";
@@ -39,6 +42,7 @@ export class ApproveCycleCountHandler implements ICommandHandler<ApproveCycleCou
                 new Date(),
                 varianceLines.map(l => ({
                     productId: l.productId,
+                    unitCost: l.unitCost,
                     variance: l.variance()
                 }))
             ));

@@ -1,6 +1,7 @@
 export class CreateCycleCountLine {
     constructor(
         public readonly productId: string,
+        public readonly unitCost: number,
         public readonly systemQuantity: number,
     ) {}
 }
