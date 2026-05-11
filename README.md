@@ -1,16 +1,14 @@
 # Inventory Management System
 
 > Built with **NestJS**, **Domain-Driven Design**, **Hexagonal Architecture**, **Event-Driven Architecture**, and **CQRS**.  
-> Reference implementation of a client's work. MIT License. Open source.
 
-[![CI](https://img.shields.io/badge/CI-PIPELINE-blue.svg)](https://github.com/akeematamuni/inventory-management-system/github/workflows/ci-cd.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
 
 ## Business Context
 
-Company is an industrial PPE distributor operating two warehouses in Lagos and Warri, with 4,000+ SKUs.  
+PPE distributor operating two warehouses in Lagos and Warri, with 4,000+ SKUs.  
 This system solves the problem of managing stocks via Excel spreadsheets and WhatsApp messages, monthly variances costing significantly, unplanned stockouts, and lack of reliable audit trail.
 
 ---
@@ -67,7 +65,7 @@ This system solves the problem of managing stocks via Excel spreadsheets and Wha
 
 ### Prerequisites
 
-- Node.js 20+ with pnpm installed
+- Node.js 22+ with pnpm installed
 - Docker + Docker Compose
 
 ### 1. Clone and install
@@ -81,38 +79,44 @@ pnpm install
 ### 2. Configure environment
 
 ```bash
-touch .env
 # Edit .env with necessary values. Check env-setup.txt to see required values
+touch .env
 ```
 
 ### 3. Start infrastructure
 
 ```bash
-docker compose -f ./infra/prod.compose.yaml --profile core --profile kafka --profile monitoring up -d
 # Starts: PostgreSQL, MongoDB, Redis, Kafka, Zookeeper, Kafka UI, Loki, Prometheus, and Grafana
+docker compose -f ./infra/prod.compose.yaml --profile core --profile kafka --profile monitoring up -d
 ```
 
 ### 4. Run migrations and seed databases
 
 ```bash
+# Run migrations
 pnpm run migration:run
-pnpm run seed
+
 # Seeds databases with 2 warehouses, 8 products, users, opening stock, purchase orders, transfers, alerts, etc.
 # Configured to be idempotent, safe to run multiple times.
+pnpm run seed
 ```
 
 ### 5. Build and start application
 
 ```bash
-pnpm run build
+# Start developement server
 pnpm run start:dev
+
+# Start a production-like server
+pnpm run build
+pnpm run start:built
 ```
 
 ### 7. Open API documentation
 
 ```bash
-http://localhost:8000/api/docs
-# Remember to change port and global prefix accordingly
+# Insert port and global prefix of choice
+"http://localhost:<port>/<globalPrefix>/docs"
 ```
 
 ---
