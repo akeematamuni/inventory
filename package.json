@@ -1,7 +1,22 @@
 {
     "name": "@inventory/source",
     "version": "1.0.0",
+    "packageManager": "pnpm@10.26.0",
     "license": "MIT",
+    "pnpm": {
+        "onlyBuiltDependencies": [
+            "@nestjs/core",
+            "@parcel/watcher",
+            "@scarf/scarf",
+            "@swc/core",
+            "bcrypt",
+            "esbuild",
+            "less",
+            "nx",
+            "unrs-resolver",
+            "protobufjs"
+        ]
+    },
     "scripts": {
         "build": "nx build api",
         "lint": "nx run-many -t lint --all",
