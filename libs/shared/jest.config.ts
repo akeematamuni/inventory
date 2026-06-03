@@ -1,5 +1,5 @@
 module.exports = {
-    displayName: 'core',
+    displayName: 'shared',
     preset: '../../jest.preset.js',
     testEnvironment: 'node',
     transform: {
@@ -9,5 +9,5 @@ module.exports = {
         ],
     },
     moduleFileExtensions: ['ts', 'js', 'html'],
-    coverageDirectory: '../../coverage/libs/core'
+    coverageDirectory: '../../coverage/libs/shared'
 };

@@ -9,9 +9,6 @@
             "options": {
                 "command": "tsc -p libs/shared/tsconfig.lib.json && tsc-alias -p libs/shared/tsconfig.lib.json"
             }
-        },
-        "lint": {
-            "executor": "@nx/eslint:lint"
         }
     }
 }

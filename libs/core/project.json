@@ -9,16 +9,6 @@
             "options": {
                 "command": "tsc -p libs/core/tsconfig.lib.json && tsc-alias -p libs/core/tsconfig.lib.json"
             }
-        },
-        "lint": {
-            "executor": "@nx/eslint:lint"
-        },
-        "test": {
-            "executor": "@nx/jest:jest",
-            "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-            "options": {
-                "jestConfig": "libs/core/jest.config.ts"
-            }
         }
     }
 }

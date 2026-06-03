@@ -9,9 +9,6 @@
             "options": {
                 "command": "tsc -p libs/metrics/tsconfig.lib.json && tsc-alias -p libs/metrics/tsconfig.lib.json"
             }
-        },
-        "lint": {
-            "executor": "@nx/eslint:lint"
         }
     }
 }
