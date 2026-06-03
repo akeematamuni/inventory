@@ -16,22 +16,23 @@
     },
     "targetDefaults": {
         "build": {
-            "dependsOn": ["^build"],
-            "inputs": ["production", "^production"],
-            "cache": true
+            "cache": true,
+            "dependsOn": ["^build"]
         },
         "lint": {
-            "cache": true,
-            "inputs": ["default"]
+            "cache": true
         },
         "test": {
             "cache": true,
-            "inputs": ["default", "^production"]
+            "options": {
+                "passWithNoTests": true,
+                "coverage": true
+            }
         },
         "@nx/js:tsc": {
             "cache": true,
             "dependsOn": ["^build"],
-            "inputs": ["production", "^production"]
+            "inputs": ["default", "^default"]
         }
     },
     "plugins": [
@@ -45,8 +46,7 @@
             "plugin": "@nx/jest/plugin",
             "options": {
                 "targetName": "test"
-            },
-            "exclude": ["apps/api-e2e/**/*"]
+            }
         }
     ]
 }
