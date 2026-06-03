@@ -1,4 +1,4 @@
-# ADR-004: Event-Driven Side Effects
+# ADR-04: Event-Driven Side Effects
 
 **Date:** January 2026  
 **Status:** Accepted  
