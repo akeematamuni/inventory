@@ -1,4 +1,4 @@
-# ADR-006: Kafka as Optional Event Transport
+# ADR-06: Kafka as Optional Event Transport
 
 **Date:** January 2026  
 **Status:** Accepted  
