@@ -1,4 +1,4 @@
-# ADR-005: CQRS with @nestjs/cqrs
+# ADR-05: CQRS with @nestjs/cqrs
 
 **Date:** January 2026  
 **Status:** Accepted  
