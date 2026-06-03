@@ -16,9 +16,16 @@ export class BaseId extends ValueObject<BaseIdProps> {
         const value = randomUUID();
 
         if (!this.VALID_PATTERN.test(value)) {
-            throw new Error('Tenant ID must be a valid UUID');
+            throw new Error('ID must be a valid UUID');
         }
 
+        return new BaseId({ value });
+    }
+
+    public static fromString(value: string): BaseId {
+        if (!this.VALID_PATTERN.test(value)) {
+            throw new Error('ID must be a valid UUID');
+        }
         return new BaseId({ value });
     }
 
