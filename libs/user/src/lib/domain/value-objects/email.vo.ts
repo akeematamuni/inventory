@@ -12,7 +12,7 @@ export class Email extends ValueObject<EmailProps> {
         super(props);
     }
 
-    public static create(value: string): Email {
+    private static validate(value: string): string {
         const normalized = value.toLowerCase().trim();
 
         if (!normalized) {
@@ -27,11 +27,18 @@ export class Email extends ValueObject<EmailProps> {
             throw new Error(`Email must not exceed ${this.MAX_LENGTH} characters`);
         }
 
+        return normalized;
+    }
+
+    public static create(value: string): Email {
+        const normalized = this.validate(value);
         return new Email({ value: normalized });
     }
 
     public static fromTrustedString(value: string): Email {
-        return new Email({ value })
+        // const normalized = this.validate(value);
+        // return new Email({ value: normalized });
+        return new Email({ value });
     }
 
     public override toString(): string {

@@ -9,15 +9,18 @@ export class PasswordHash extends ValueObject<PasswordHashProps> {
         super(props);
     }
 
-    public static create(hashedPassword: string): PasswordHash {
-        if (!hashedPassword) {
+    private static validate(value: string): void {
+        if (!value) {
             throw new Error('Password hash cannot be empty');
         }
 
-        if (hashedPassword.length !== 60) {
+        if (value.length !== 60) {
             throw new Error('Invalid bcrypt hash format');
         }
+    }
 
+    public static create(hashedPassword: string): PasswordHash {
+        this.validate(hashedPassword);
         return new PasswordHash({ value: hashedPassword });
     }
 
