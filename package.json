@@ -19,6 +19,7 @@
     },
     "scripts": {
         "build": "nx build api",
+        "test": "nx run-many -t test",
         "lint": "nx run-many -t lint --all",
         "start:built": "node dist/ims/main.js",
         "start:dev": "tsx apps/api/src/main.ts",
