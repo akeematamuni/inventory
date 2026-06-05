@@ -19,14 +19,6 @@ describe('AdjustmentEntity', () => {
         createdBy: 'user-admin',
     };
 
-    beforeEach(() => {
-        jest.useFakeTimers();
-    });
-
-    afterEach(() => {
-        jest.useRealTimers();
-    });
-
     describe('create', () => {
         it('should create a valid manual adjustment', () => {
             const adj = AdjustmentEntity.create(createProps);
@@ -55,7 +47,7 @@ describe('AdjustmentEntity', () => {
             const props = {
                 ...createProps,
                 notes: 'Historical record',
-                createdAt: new Date('2026-01-01T00:00:00Z'),
+                createdAt: new Date('2026-03-02'),
             };
 
             const adj = AdjustmentEntity.reconstitute(props, id);
